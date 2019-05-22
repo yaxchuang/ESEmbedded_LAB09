@@ -10,9 +10,19 @@ SECTIONS
     {
         KEEP(*(.vector_table))
         *(.text)
-        *(.text.*) /* putting the malloc function into flash
+        *(.text.*)
         *(.rodata)
         *(.rodata.*)
+    } > FLASH
+
+    .eh_frame :
+    {
+        *(.eh_frame)
+    } > FLASH
+
+    .ARM.exidx :
+    {
+        *(.ARM.exidx)
         _mydata_lma_start = .; /* LMA is equivalent to VMA in this section */
     } > FLASH
 
@@ -20,7 +30,7 @@ SECTIONS
     {
         _mydata_vma_start = .;
         *(.data)
-        *(.data.*)  /* put the data section into the flash
+        *(.data.*)
         _mydata_vma_end = .;
     } > SRAM
 
